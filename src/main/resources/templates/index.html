@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main.html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div layout:fragment="mainContentPage">
+    <button type="button" sec:authorize="hasAnyRole('ROLE_ADMIN')" class="btn btn-success text-light mt-4 mb-4" data-bs-toggle="modal" data-bs-target="#addBookBackdrop">
+        + ADD NEW
+    </button>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>GENRE</th>
+            <th>AUTHOR</th>
+            <th>PRICE(KZT)</th>
+            <th sec:authorize="hasAnyRole('ROLE_MODERATOR')" width="10%">DETAILS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:text="${book.author.fullname}"></td>
+            <td th:text="${book.price}"></td>
+            <td sec:authorize="hasAnyRole('ROLE_MODERATOR')">
+                <a th:href="@{'/details/'+${book.id}}" class="btn btn-info text-light">DETAILS</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</html>

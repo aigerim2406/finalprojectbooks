@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:/www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main.html">
+<div layout:fragment="mainContentPage">
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-6 mx-auto">
+                <form th:action="@{'/saveauthor'}" method="post" th:if="${author!=null}">
+                    <input type="hidden" name="id" th:value="${author.id}">
+                    <div class="mb-3">
+                        <label  class="form-label">NAME:</label>
+                        <input name="fullname" th:value="${author!=null?author.fullname:''}" type="text" class="form-control">
+                    </div>
+
+                    <button class="btn btn-success">SAVE</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-danger">DELETE</button>
+                </form>
+
+                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form th:action="@{'/deleteauthor'}" method="post" th:if="${author!=null}">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirm delete</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="id" th:value="${author.id}">
+                                    Are you sure?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
+                                    <button type="submit" class="btn btn-danger">DELETE author</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
